@@ -104,6 +104,10 @@ jobs:
           cat >> .config <<EOF
           CONFIG_TARGET_IMAGES_GZIP=y
           EOF
+          # add MIPS FPU
+          cat >> .config <<EOF
+          CONFIG_KERNEL_MIPS_FPU_EMULATOR=y
+          EOF
           # 编译UEFI固件:
           # cat >> .config <<EOF
           # CONFIG_EFI_IMAGES=y
@@ -160,19 +164,38 @@ jobs:
           # CONFIG_PACKAGE_luci-theme-netgear=y
           # EOF
           # 常用软件包:
-          cat >> .config <<EOF
+          # cat >> .config <<EOF
           # CONFIG_PACKAGE_curl=y
           # CONFIG_PACKAGE_htop=y
           # CONFIG_PACKAGE_nano=y
           # CONFIG_PACKAGE_screen=y
           # CONFIG_PACKAGE_tree=y
           # CONFIG_PACKAGE_vim-fuller=y
+          # CONFIG_PACKAGE_wget=y
+          # EOF
+          # 自定义插件
+          cat >> .config <<EOF
+          CONFIG_PACKAGE_curl=y
           CONFIG_PACKAGE_wget=y
+          CONFIG_PACKAGE_luci-app-commands=y
+          CONFIG_PACKAGE_luci-app-diag-core=y
+          CONFIG_PACKAGE_luci-app-autoreboot
+          CONFIG_PACKAGE_luci-app-flowoffload
+          CONFIG_PACKAGE_luci-app-upnp
+          CONFIG_PACKAGE_luci-app-dnscrypt-proxy
           EOF
           # 取消编译VMware镜像以及镜像填充 (不要删除被缩进的注释符号):
           cat >> .config <<EOF
           # CONFIG_TARGET_IMAGES_PAD is not set
           # CONFIG_VMDK_IMAGES is not set
+          EOF
+          # cancel some packages
+          cat >> .config <<EOF
+          # CONFIG_PACKAGE_luci-app-frpc is not set
+          # CONFIG_PACKAGE_luci-app-vlmcsd is not set
+          # CONFIG_PACKAGE_luci-app-pptp-server is not set
+          # CONFIG_PACKAGE_luci-app-adbyby-plus is not set
+          # CONFIG_PACKAGE_luci-app-unblockmusic is not set
           EOF
           # 
           # ========================固件定制部分结束========================
@@ -194,8 +217,15 @@ jobs:
           echo "======================="
           du -h ./ --max-depth=1
           du -h /mnt/openwrt/ --max-depth=1 || true
-      - name: Prepare artifact
-        run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+    # - name: Prepare artifact
+    #   run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+      
+      - name: Upload bin directory
+        uses: actions/upload-artifact@master
+        if: always()
+        with:
+          name: OpenWrt_K2P_bin
+          path: ./bin
 
       - name: Upload config.seed
         uses: actions/upload-artifact@master
@@ -203,6 +233,9 @@ jobs:
           name: config.seed
           path: ./bin/targets/*/*/config.seed
 
+      - name: Remove packages
+        run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
+        
       - name: Upload firmware
         uses: actions/upload-artifact@master
         with:
