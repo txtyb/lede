@@ -7,7 +7,7 @@
 # <https://github.com/KFERMercer/OpenWrt-CI>
 #
 
-name: Build Lean's OpenWrt for K2P Slim
+name: Build Lean's OpenWrt for Orange Pi Zero
 
 on:
   push:
