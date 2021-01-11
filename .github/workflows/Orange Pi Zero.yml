@@ -380,13 +380,13 @@ jobs:
         if: always()
         with:
                 name: OpenWrt_K2P_bin
-        path: ./bin
+                path: ./bin
 
       - name: Upload config.seed
         uses: actions/upload-artifact@master
         with:
                 name: config.seed
-        path: ./bin/targets/*/*/config.seed
+                path: ./bin/targets/*/*/config.seed
 
       - name: Remove packages
         run: find ./bin/targets/ -type d -name "packages" | xargs rm -rf {}
@@ -395,4 +395,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
                 name: OpenWrt_firmware
-        path: ./bin/targets/
+                path: ./bin/targets/
