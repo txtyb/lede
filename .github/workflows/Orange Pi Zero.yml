@@ -304,6 +304,13 @@ jobs:
            CONFIG_PACKAGE_luci-proto-wireguard=y
            CONFIG_PACKAGE_luci-theme-material=y
            CONFIG_PACKAGE_luci-theme-netgear=y
+#===========================================================================
+           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Kcptun=y
+           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_Shadowsocks=y
+           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Server=y
+           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_ShadowsocksR_Socks=y
+           CONFIG_PACKAGE_luci-app-ssr-plus_INCLUDE_V2ray=y
+#===========================================================================
            CONFIG_PACKAGE_mount-utils=y
            CONFIG_PACKAGE_mwan3=y
            CONFIG_PACKAGE_nano=y
