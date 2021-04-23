@@ -100,6 +100,7 @@ jobs:
           CONFIG_TARGET_IMAGES_GZIP=y
           EOF
           #
+          cat >> .config <<EOF
           CONFIG_TARGET_ramips=y
           CONFIG_TARGET_ramips_mt7621=y
           CONFIG_TARGET_ramips_mt7621_DEVICE_hiwifi_hc5962=y
@@ -308,6 +309,7 @@ jobs:
           CONFIG_boost-runtime-shared=y
           CONFIG_boost-static-and-shared-libs=y
           CONFIG_boost-variant-release=y
+          EOF
           # 
           # ========================固件定制部分结束========================
           # 
